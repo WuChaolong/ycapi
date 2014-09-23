@@ -17,9 +17,9 @@ function($location,Ycapi,$scope, $firebase) {
   $scope.api = {};
 
   $scope.$on('$locationChangeSuccess', function(event) {
-      $scope.navShow = false;
       var path = $location.path();
-      if(path){ 
+      if(path){
+        $scope.navShow = false;
         path = encodeURI(path);
         $scope.api = Ycapi("groups"+path);
         // var ref = new Firebase("https://ycapi.firebaseio.com/groups/%E5%88%9D%E5%A7%8B%E5%8C%96/%E8%8E%B7%E5%8F%96%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0");
