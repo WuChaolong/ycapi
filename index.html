@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html ng-app="app" manifest="demo.appcache">
+<head>
+    <title>西红柿炒蛋 API</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="js/angular/angular.min.js"></script>
+    <script src="js/firebase/firebase.js"></script>
+    <script src="js/firebase/angularfire.min.js"></script>
+	<script src="js/main.js"></script> 
+</head>
+<body>
+<div class="container" ng-controller="ycapi">
+    <div ng class="article col-md-4 nav " ng-class="{'nav-show':navShow}">
+    	<!-- <h3>
+	    	<form ng-submit="addGroup(name)">
+	    		<input ng-model="name"><input type="submit" value="添加">
+	    	</form>
+    	</h3> -->
+
+        <h3>注意事项</h3>
+
+        <ul>
+            <li>
+                <a href="http://112.124.1.149:8000/readme.html" target="view_window">概述</a>
+            </li>
+        </ul>
+
+        <div ng-repeat="(groupKey, value) in groups">
+            <h3>{{groupKey}}</h3>
+            <ul>
+            	<!-- <li>
+    	        	<form ng-submit="addApi(apiForm,key);apiForm = null">
+    		    		<input ng-model="apiForm.value"><input ng-model="apiForm.description"><input type="submit" value="添加">
+    		    	</form>
+        		</li> -->
+                <li ng-repeat="(key, value) in value" ng-class="{active:key==api.$id}">
+                    <div>
+                        <a ng-href="#/{{groupKey}}/{{key}}" >{{value.url}}</a>
+                        {{key}}
+                    </div>
+                    <!-- <div>
+                        <input ng-model="value.value">
+                        <input ng-model="value.description">
+                    </div> -->
+                </li>
+            </ul>
+        </div>
+        <i class="iconfont switch-list" ng-click="navShow = !navShow">&#xe626;</i>
+    </div>
+    <div class="article col-md-8" ng-if="api.$id">
+        <h2 >{{api.$id}}</h2>
+
+        <h4>接口url</h4>
+        <pre class="request route highlight">{{api.methods}} {{api.url}}</pre>
+
+        <h4>需要登录</h4>
+        <pre class="request route highlight">{{api.needLogin}}</pre>
+
+        <h4>请求参数</h4>
+        <table class="parameters table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th>参数名称</th>
+                <th>类型及范围</th>
+                <th>示例值</th>
+                <th>默认值</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            
+            <tbody>
+                <tr ng-repeat="(key, value) in api.parameters">
+                    <td ng-class="{required:value.required}">
+                        <span class="name">{{key}}</span>
+                    </td>
+                    <td>
+                        <span class="description">{{value.dataType}}</span>
+                    </td>
+                    <td>
+                        <span class="description">{{value.example}}</span>
+                    </td>
+                    <td>
+                        <span class="description">{{value.default}}</span>
+                    </td>
+                    <td>
+                        <span class="description">{{value.description}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>返回结果</h4>
+        <table class="response-fields table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th>参数名称</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, value) in newApiReturn">
+                <td>
+                    <span class="name" ng-if="value[2] == 0">{{value[0]}}</span>
+                </td>
+                <td>
+                    <span class="description" ng-if="value[2] == 1">{{value[0]}}</span>
+                </td>
+                <td>
+                    <span class="description" ng-if="value[2] == 2">{{value[0]}}</span>
+                </td>
+                <td>
+                    <span class="description" ng-if="value[2] == 3">{{value[0]}}</span>
+                </td>
+                <td>
+                    <span class="description">{{value[1]}}</span>
+                </td>
+            </tr>
+            
+            
+            
+            </tbody>
+        </table>
+
+        <h4>错误码</h4>
+        <table class="response-fields table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th>错误码</th>
+                <th>错误描述</th>
+                <th>解决方案</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span class="name"></span>
+                </td>
+                <td>
+                    <span class="description"></span>
+                </td>
+
+                <td>
+                    <span class="description"></span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</body></html>
